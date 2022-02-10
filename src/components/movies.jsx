@@ -8,11 +8,11 @@ class Movies extends Component {
 
         
      } ;
-handleDelete=(movie)=>{
-const movies =this.state.movies.filter(m=>m._id !== movie._id)
+ handleDelete=(movie)=>{ //we bind to access current obj
+  const movies= this.state.movies.filter(m=>m._id !== movie._id); //new movies array which includes all movies except current movie obj
 // console.log(movie);
-this.setState({movies});
-};
+this.setState({movies}); // to update the state!!
+ };
      
     
 
@@ -35,7 +35,8 @@ this.setState({movies});
       <td>{movie.genre.name}</td>
       <td>{movie.numberInStock}</td>
       <td>{movie.dailyRentalRate}</td>
-      <td><button onClick={()=>this.handleDelete(movie)} className="btn btn-danger btn-sm">Delete</button></td>
+      <td><button onClick={()=>(this.handleDelete(movie))} className="btn btn-danger btn-sm">Delete</button></td>
+      {/* in order to pass an arg we need to change it to arrow function jo map wala movie h wAHI WALA H YE BHI */}
     </tr>
     ))}
     

@@ -8,9 +8,13 @@ class Movies extends Component {
 
         
      } ;
-
+handleDelete=(movie)=>{
+const movies =this.state.movies.filter(m=>m._id !== movie._id)
+// console.log(movie);
+this.setState({movies});
+};
      
-     
+    
 
     render() {  
       
@@ -21,25 +25,25 @@ class Movies extends Component {
       <th>Genre</th>
       <th>Stock</th>
       <th>Rate</th>
+      <th></th>
     </tr>
   </thead>
   <tbody>
-    {this.state.movies.map(movie=><tr>
+    {this.state.movies.map(movie=>(
+    <tr key={movie._id}>
       <td>{movie.title}</td>
       <td>{movie.genre.name}</td>
       <td>{movie.numberInStock}</td>
       <td>{movie.dailyRentalRate}</td>
-    </tr>)}
+      <td><button onClick={()=>this.handleDelete(movie)} className="btn btn-danger btn-sm">Delete</button></td>
+    </tr>
+    ))}
     
   </tbody>
 </table>
       
     }
-    /////////this is what i learned to render a list we gotta use map method { is used to dynamically change the value so acchi baat h}
-    ////////// and jo num likha h na maine waha kuch bhi name use kr skte ho koi problem nai h
-    /////////basic gyan-> agr tum kuch import kr rhe ho aur usko use nhi kr rhe to wo chiz automatically exclude ho jaayegi isliye apan ne<movies> krke use kia h app.js me!!
-    // this.state.movies.map( (num)=><ul>{ num.title} </ul>);
-      // this.state.movies.map( (num)=> num.title);
+  
 }
  
 export default Movies;

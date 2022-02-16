@@ -1,6 +1,7 @@
 // import react from 'react';
 import React, { Component } from 'react';
 import { getMovies } from "../services/fakeMovieService";
+import Like from './common/Liked'
 
 class Movies extends Component {
     state = { 
@@ -8,12 +9,19 @@ class Movies extends Component {
 
         
      } ;
- handleDelete=(movie)=>{ //we bind to access current obj
+ handleDelete=(movie)=>{ 
   const movies= this.state.movies.filter(m=>m._id !== movie._id); //new movies array which includes all movies except current movie obj
-// console.log(movie);
-this.setState({movies}); // to update the state!!
+this.setState({movies}); 
  };
-     
+
+  handleLike=(movie)=>{
+    // console.log('like clicked',movie);
+    const movies=[...this.state.movies]
+    const index=movies.indexOf(movie)
+    movies[index]={...movies[index]}
+    movies[index].liked=!movies[index].liked;
+    this.setState({movies});
+  };
  
  render() {  
       const {length:count }= this.state.movies; //picking len proprty of movies , obj destructuring
@@ -31,6 +39,7 @@ this.setState({movies}); // to update the state!!
            <th>Stock</th>
            <th>Rate</th>
            <th></th>
+           <th></th>
          </tr>
        </thead>
        <tbody>
@@ -40,6 +49,7 @@ this.setState({movies}); // to update the state!!
              <td>{movie.genre.name}</td>
              <td>{movie.numberInStock}</td>
              <td>{movie.dailyRentalRate}</td>
+            <td>  <Like liked={movie.liked} onClick={()=>this.handleLike(movie)}/>  </td> 
              <td><button onClick={() => (this.handleDelete(movie))} className="btn btn-danger btn-sm">Delete</button></td>
              {/* in order to pass an arg we need to change it to arrow function jo map wala movie h wAHI WALA H YE BHI */}
            </tr>

@@ -1,14 +1,22 @@
-import React, { Component } from "react";
-//maybe no local state toh isliye sfc use
-//whenever you want to build a reusable compnent you should always think about the interface of the components what are the inputs thet compnents is gonna recieve what are the vents its gonnna raise
-//the best wAY TO DECIDE THE INTERFACE OF THE COMP IS TO USE IT BEFORE IMPLEMENTING
+import React from "react";
+import _ from "lodash"; //underscore popular library
+
 const Pagination = (props) => {
+  const { itemsCount, pageSize } = props;
+  const pagesCount = Math.ceil(itemsCount / pageSize); // if pagesize > itemscount toh apan ko koi page number na dikhaye isliye ceil function use kia h!!
+  if (pagesCount === 1) return null;
+
+  //[1...pagesCount].map() -> to use lodash for this
+  const pages = _.range(1, pagesCount + 1); // adding +1 so that last page is also included
+
   return (
     <nav>
       <ul className="pagination">
-        <li className="page-item">
-          <a className="page-link">1</a>
-        </li>
+        {pages.map((page) => (
+          <li key={page} className="page-item">
+            <a className="page-link">{page}</a>
+          </li>
+        ))}
       </ul>
     </nav>
   );
